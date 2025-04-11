@@ -11,10 +11,21 @@ int main() {
     }
 
     std::string line;
+    int floor {0};
 
     while (getline(file, line))
-        std::cout << line << std::endl;
+        for (int index = 0; index < line.length(); index++) {
+            if (line[index] == '(') 
+                floor++;
+            else if (line[index] == ')')
+                floor--;
+            if (floor == -1) {
+                std::cout << "Basement:" << index+1 << std::endl;
+                return 0;
+            }
+        }
 
+    std::cout << "Floor:" << floor << std::endl;
     file.close();
     return 0;
 }
