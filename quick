@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "Usage: quick <filename.cpp>"
+    exit 1
+fi
+
+filepath="$1"
+filename=$(basename ${filepath})
+
+basename="bin/${filename%.cpp}"  # Remove .cpp extension and put in bin dir
+
+if [ ! -d "bin/" ]; then
+    echo -n "No bin/ dir found... Create one? [Y/n] "
+    read confirmation
+    confirmation=${confirmation,,} # convert to lowercase
+    if [[ -z "$confirmation" || "$confirmation" == "y" || "$confirmation" == "yes" ]]; then
+        mkdir "bin"
+    else
+        echo "Exiting quick compiler..."
+        exit 1
+    fi
+fi
+
+g++ "$filepath" -o "$basename"
+if [ $? -eq 0 ]; then
+    ./"$basename"
+else
+    echo "Compilation failed."
+fi
