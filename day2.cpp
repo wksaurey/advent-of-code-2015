@@ -26,27 +26,18 @@ int main() {
         int l = nums[0];
         int w = nums[1];
         int h = nums[2];
-        std::cout << l << 'x' << w << 'x' << h << '\n';
+        // std::cout << l << 'x' << w << 'x' << h << '\n';
 
-        int surface_area = 2*(l*w + w*h + h*l);
+        int volume = l * w * h;
 
         int max = std::max(l, w);
         max = std::max(max, h);
 
-        int extra = 0;
-        if (l == max)
-            extra = w*h;
-        if (w == max)
-            extra = l*h;
-        if (h == max)
-            extra = l*w;
+        int ribbon = 2 * (l + w + h - max) + volume;
+        // std::cout << "Ribbon: " << ribbon << std::endl;
+
+        result += ribbon;
         
-        std::cout << line << '\n';
-        // std::cout << surface_area + extra << " = " << surface_area << " + " << extra << "\n\n";
-        result += surface_area + extra;
-        // 586244 too low
-        // 33496016 too high
-        // 1586333 too high
     }
 
     std::cout << "Result: " << result << std::endl;
